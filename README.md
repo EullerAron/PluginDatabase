@@ -12,23 +12,28 @@ This repository exists to provide a secure, version-controlled collection of plu
 
 Whether you're a plugin developer submitting updates or a user browsing available extensions, this database serves as the trusted source for all Millennium-compatible plugins.
 
-## Submitting A Plugin
+## Submitting A Plugin[^1]
 
-To submit a plugin to Millennium's plugin repository, open a pull request that adds your plugin as a submodule using the command
-`git submodule add https://github.com/YourUsername/YourRepository your-plugin`
-inside the `plugins` directory.
+To submit a plugin, open a pull request that adds your repository as a submodule. From the root of this repository, run:
 
-This will attach your repository from a specific commit, meaning when you update your repository, the changes won't be reflected here, unless you open a pull request to update it.
-This is in place to prevent malicious code by forcing us to audit all of your code changes.
-
-## Updating Your Plugin
-
-Once you have your submodule added, in order to update it,
-change directory to `plugins/your-plugin`, checkout the branch you wish to use and pull:
 ```
-git checkout your-plugin-branch
-git pull
+git submodule add https://github.com/YourUsername/YourRepository plugins/your-plugin
 ```
-This should update your plugin to the latest version. Commit the change and open a pull request.
 
-In case you wish to clone plugins at their attached commits, run `git submodule update --init`.
+This pins your plugin at a specific commit. Updates to your repository won't appear here until you open a pull request to advance the pointer — this is intentional, as all code changes are audited before reaching users.
+
+## Updating Your Plugin[^2]
+
+To update your plugin to a newer commit, pull from inside the submodule directory, then commit the pointer change in the parent repo:
+
+```
+git submodule update --remote plugins/your-plugin
+git commit -m "chore: update your-plugin"
+```
+
+Then open a pull request with that commit.
+
+To clone all plugins at their pinned commits after a fresh checkout, run `git submodule update --init`.
+
+[^1]: Submitting A Plugin
+[^2]: Updating Your Plugin
